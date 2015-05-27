@@ -183,13 +183,17 @@ template <class T> inline constexpr typename std::remove_reference<T>::type&& co
     return static_cast<typename std::remove_reference<T>::type&&>(t);
 }
 
-
+#define UNUSED(x) (void)(x)
+    
 #if defined NDEBUG
 # define TR2_OPTIONAL_ASSERTED_EXPRESSION(CHECK, EXPR) (EXPR)
 #else
 # define TR2_OPTIONAL_ASSERTED_EXPRESSION(CHECK, EXPR) ((CHECK) ? (EXPR) : (fail(#CHECK, __FILE__, __LINE__), (EXPR)))
   inline void fail(const char* expr, const char* file, unsigned line)
   {
+      UNUSED(expr);
+      UNUSED(file);
+      UNUSED(line);
   # if defined __clang__ || defined __GNU_LIBRARY__
     //__assert(expr, file, line);
   # elif defined __GNUC__
